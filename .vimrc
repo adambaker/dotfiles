@@ -1,5 +1,5 @@
 " Tabs and Spaces
-set tabstop=2
+set tabstop=4
 set shiftwidth=2
 set softtabstop=2
 set backspace=indent,eol,start
@@ -24,9 +24,11 @@ set ignorecase     " ignore case in search
 set smartcase      " override ignorecase if uppercase is used in search string
 set report=0       " report all changes
 set laststatus=2   " always show status-line
-set cursorline     " highlight current line
+set nocursorline   " highlight current line
 set scrolloff=4
 set nofoldenable
+set timeoutlen=200 " set timeout between key sequences
+set encoding=utf-8
 
 set background=dark
 
@@ -38,11 +40,33 @@ set statusline=%F\ %m%r%w%y\ %=(%L\ loc)\ [#\%03.3b\ 0x\%02.2B]\ \ %l,%v\ \ %P
 
 " Per file-type indentation
 autocmd BufEnter *.js  set softtabstop=4|set shiftwidth=4
-autocmd BufEnter *.c   set softtabstop=4|set shiftwidth=4
+autocmd BufEnter *.go  set tabstop=4|set shiftwidth=4
+autocmd BufEnter *.c   set shiftwidth=4|set noexpandtab
+autocmd BufEnter *.h   set shiftwidth=4|set noexpandtab
+autocmd BufEnter *.lua set shiftwidth=2|set expandtab
+
+" map make to F8
+" map cl to F4 and cn to S-F4
+
+autocmd BufEnter *.erl   set softtabstop=4|set shiftwidth=4
 
 " Better search
 set hlsearch
 set incsearch
+
+" Vundle
+filetype off
+set rtp+=~/.vim/vundle.git/
+call vundle#rc()
+
+"
+" Bundles
+"
+Bundle "Lokaltog/vim-powerline"
+Bundle "kien/ctrlp.vim"
+Bundle "pangloss/vim-javascript"
+Bundle "pangloss/vim-javascript"
+Bundle "scrooloose/syntastic"
 
 " File-type
 filetype on
@@ -70,6 +94,9 @@ inoremap () ()<Left>
 inoremap [] []<Left>
 inoremap '' ''<Left>
 inoremap "" ""<Left>
+
+noremap <C-j> }
+noremap <C-k> {
 
 inoremap <C-l> <C-x><C-l>
 

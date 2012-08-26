@@ -6,7 +6,7 @@ URxvt.saveLines:           4096
 URxvt.internalBorder:      4
 URxvt.externalBorder:      0
 URxvt.highlightSelection:  true
-URxvt.letterSpace:         -1
+URxvt.letterSpace:         0
 URxvt.loginShell:          true
 
 ! Font

@@ -7,24 +7,23 @@
 .about
 
   these dotfiles are meant to be used in linux, although most of it will work in other *nixes too.
-  they are centered around vim, zsh, git, X & urxvt.
+  they are centered around vim, fish, git, X & urxvt.
 
 .installation
 
-  1. change your login shell to zsh:
+  1. change your login shell to fish:
 
-    $ chsh -s /bin/zsh
+    $ chsh -s /usr/bin/fish
 
   2. copy all files to ~
   3. change the colorscheme in the .vimrc, or see http://github.com/cloudhead/shady.vim
 
 .features
 
-  zsh
-  - % is colored differently depending on return value of previous command
-  - Shows current git branch and action (ex: merging), through built-in vcs_info functions
+  fish
+  - Prompt is colored differently depending on return value of previous command
+  - Shows current git branch and action (ex: merging)
   - Current branch's color depends on the state of the working directory
-  - ls colors
   - sane defaults & options (completion, spell-correction..)
 
   vim

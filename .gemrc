@@ -1,4 +1,5 @@
 --- 
+:nordoc: true
 :backtrace: false
 :benchmark: false
 :bulk_threshold: 1000
@@ -8,4 +9,5 @@
 - http://gems.github.com
 :update_sources: true
 :verbose: true
+gem: --no-ri --no-rdoc
 gemcutter_key: 8526af70dd051c5d51e2ddb9ad4a55d6

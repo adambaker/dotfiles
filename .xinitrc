@@ -35,15 +35,16 @@ if test -f $usermodmap; then
 fi
 
 while true ; do
-  qual=$(iwconfig wlan0 | grep '[0-9]\+\/[0-9]\+' -o)
-  a=$(echo $qual | egrep '^[0-9]+' -o)
-  b=$(echo $qual | egrep '[0-9]+$' -o)
+  iw=`/usr/sbin/iwconfig wlan0`
+  qual=`echo "$iw" | grep '[0-9]\+\/[0-9]\+' -o`
+  a=`echo $qual | egrep '^[0-9]+' -o`
+  b=`echo $qual | egrep '[0-9]+$' -o`
 
   if test -e $b; then
-    qual=(($a * 100 / $b))%
+    qual=$(($a * 100 / $b))%
   fi
 
-  xsetroot -name "$(iwconfig wlan0 | head -n 1 | awk '{ print $4 }') $qual ($( acpi -b | awk '{ print $3, $4 }' | tr -d ',' )) $(date +"%R, %D")"
+  xsetroot -name "$(echo "$iw" | head -n 1 | awk '{ print $4 }') $qual ($( acpi -b | awk '{ print $3, $4 }' | tr -d ',' )) $(date +"%R, %D")"
   sleep 10s
 done &
 

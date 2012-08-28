@@ -9,6 +9,19 @@ function e; vim $argv; end
 function sleep; sudo pm-suspend; end
 function pdf; mupdf $argv; end
 function img; feh -B black $argv; end
+function mv; /bin/mv -i $argv; end
+
+set -x PATH ~/bin ~/.cabal/bin /usr/local/go/bin /usr/local/mysql/bin /usr/local/bin /usr/bin /bin /usr/local/sbin /usr/sbin /sbin $PATH
+
+set -x CLICOLOR "true"
+set -x LSCOLORS "Gxfxcxdxbxegedabagacad"
+set -x EDITOR "vim"
+set -x USERWM `which dwm`
+set -x LANG "en_US.UTF-8"
+set -x ME "cloudhead"
+set -x GOPATH ~
+set -x GOBIN ~/bin
+set -x DOOZER_URI "doozer:?ca=doozer.int.s-cloud.net:8046"
 
 set me (whoami)
 
@@ -46,7 +59,7 @@ function fish_prompt
     set status_color red
   else
     set status_color yellow
-    set status_prompt (set_color red)$last_status(set_color normal)
+    set status_prompt ' '(set_color red)$last_status(set_color normal)
   end
 
   if test "$me" != "cloudhead"
@@ -54,7 +67,7 @@ function fish_prompt
   end
 
   if test -d ".git"
-    set branch (set_color -o $branch_color)(__fish_git_branch_prompt)(set_color normal)
+    set branch (set_color -o $branch_color)(__fish_git_prompt)(set_color normal)
   end
 
   set -l prompt (set_color $status_color)'♡ '(set_color normal)

@@ -65,8 +65,6 @@ call vundle#rc()
 Bundle "Lokaltog/vim-powerline"
 Bundle "kien/ctrlp.vim"
 Bundle "pangloss/vim-javascript"
-Bundle "pangloss/vim-javascript"
-Bundle "scrooloose/syntastic"
 
 " File-type
 filetype on

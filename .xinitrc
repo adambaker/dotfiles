@@ -1,5 +1,4 @@
 #!/bin/sh
-# $Xorg: xinitrc.cpp,v 1.3 2000/08/17 19:54:30 cpqbld Exp $
 
 userresources=$HOME/.Xresources
 usermodmap=$HOME/.Xmodmap
@@ -11,56 +10,51 @@ xset -b
 
 # merge in defaults and keymaps
 
-if [ -f $sysresources ]; then
-    if [ -x /usr/bin/cpp ] ; then
-        xrdb -merge $sysresources
-    else
-        xrdb -nocpp -merge $sysresources
-    fi
+if test -f $sysresources; then
+  if test -x /usr/bin/cpp; then
+    xrdb -merge "$sysresources"
+  else
+    xrdb -nocpp -merge "$sysresources"
+  fi
 fi
 
-if [ -f $sysmodmap ]; then
-    xmodmap $sysmodmap
+if test -f $sysmodmap; then
+  xmodmap $sysmodmap
 fi
 
-if [ -f "$userresources" ]; then
-    if [ -x /usr/bin/cpp ] ; then
-        xrdb -merge "$userresources"
-    else
-        xrdb -nocpp -merge "$userresources"
-    fi
+if test -f $userresources; then
+  if test -x /usr/bin/cpp; then
+    xrdb -merge "$userresources"
+  else
+    xrdb -nocpp -merge "$userresources"
+  fi
 fi
 
-if [ -f "$usermodmap" ]; then
-    xmodmap "$usermodmap"
+if test -f $usermodmap; then
+  xmodmap "$usermodmap"
 fi
-
-# start some nice programs
-if [ -d /usr/X11/lib/X11/xinit/xinitrc.d ] ; then
-  for f in /usr/X11/lib/X11/xinit/xinitrc.d/*.sh ; do
-    [ -x "$f" ] && . "$f"
-  done
-  unset f
-fi
-
-# Disable bell
-xset -b
 
 while true ; do
-  QUAL=`iwconfig wlan0 | grep '[0-9]\+\/[0-9]\+' -o`
-  A=`echo $QUAL | egrep '^[0-9]+' -o`
-  B=`echo $QUAL | egrep '[0-9]+$' -o`
+  qual=$(iwconfig wlan0 | grep '[0-9]\+\/[0-9]\+' -o)
+  a=$(echo $qual | egrep '^[0-9]+' -o)
+  b=$(echo $qual | egrep '[0-9]+$' -o)
 
-  if [ $B ]; then
-    QUAL=$(($A * 100 / $B))%
+  if test -e $b; then
+    qual=(($a * 100 / $b))%
   fi
 
-  xsetroot -name "$(iwconfig wlan0 | head -n 1 | awk '{ print $4 }') $QUAL ($( acpi -b | awk '{ print $3, $4 }' | tr -d ',' )) $(date +"%R, %D")"
-  sleep 1m
+  xsetroot -name "$(iwconfig wlan0 | head -n 1 | awk '{ print $4 }') $qual ($( acpi -b | awk '{ print $3, $4 }' | tr -d ',' )) $(date +"%R, %D")"
+  sleep 10s
 done &
 
 keychain ~/.ssh/id_rsa
-[ -f ~/.keychain/$HOSTNAME-sh ] && . ~/.keychain/$HOSTNAME-sh 2>/dev/null
-[ -f ~/.keychain/$HOSTNAME-sh-gpg ] && . ~/.keychain/$HOSTNAME-sh-gpg 2>/dev/null
+
+if test -f "~/.keychain/$HOSTNAME-sh"; then
+  . ~/.keychain/$HOSTNAME-sh 2>/dev/null
+fi
+
+if test -f "~/.keychain/$HOSTNAME-sh-gpg"; then
+  . ~/.keychain/$HOSTNAME-sh-gpg 2>/dev/null
+fi
 
 exec dwm

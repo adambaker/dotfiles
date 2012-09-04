@@ -1,18 +1,43 @@
 #
 # Fish shell config
 #
-function g; git $argv; end
-function l; ls -lGhp $argv; end
-function ll; ls -lAGhp $argv; end
-function vi; vim $argv; end
-function e; vim $argv; end
-function sleep; sudo pm-suspend; end
-function pdf; mupdf $argv; end
-function img; feh -B black $argv; end
-function mv; /bin/mv -i $argv; end
+function g
+  git $argv
+end
+
+function l
+  ls -lGhp $argv
+end
+
+function ll
+  ls -lAGhp $argv
+end
+
+function vi
+  vim $argv
+end
+
+function e
+  vim $argv
+end
+
+function sleep
+  sudo pm-suspend
+end
+
+function pdf
+  mupdf $argv
+end
+
+function img
+  feh -B black $argv
+end
+
+function mv
+  /bin/mv -i $argv
+end
 
 set -x PATH ~/bin ~/.cabal/bin /usr/local/go/bin /usr/local/mysql/bin /usr/local/bin /usr/bin /bin /usr/local/sbin /usr/sbin /sbin $PATH
-
 set -x CLICOLOR "true"
 set -x LSCOLORS "Gxfxcxdxbxegedabagacad"
 set -x EDITOR "vim"
@@ -26,9 +51,11 @@ set -x DOOZER_URI "doozer:?ca=doozer.int.s-cloud.net:8046"
 set me (whoami)
 
 set fish_pager_color_description 444
-set fish_pager_color_prefix --underline
-set fish_pager_color_progress 555
-set fish_pager_color_completion ccc
+set fish_pager_color_prefix fff
+set fish_pager_color_progress black --background ccc
+set fish_pager_color_completion bbb
+set fish_greeting "Welcome, $USER"
+set fish_color_search_match 111 --background yellow
 
 function j
   if test -d ~/src/$argv[1]
@@ -50,9 +77,15 @@ function fish_prompt
   git diff --cached --quiet HEAD ^&-
 
   if test $status = 1
-    set branch_color green
+    set branch_color yellow
   else
-    set branch_color red
+    git diff --quiet HEAD ^&-
+
+    if test $status = 1
+      set branch_color green
+    else
+      set branch_color red
+    end
   end
 
   if test $last_status = 0
@@ -70,7 +103,7 @@ function fish_prompt
     set branch (set_color -o $branch_color)(__fish_git_prompt)(set_color normal)
   end
 
-  set -l prompt (set_color $status_color)'♡ '(set_color normal)
+  set -l prompt (set_color $status_color)'❤ '(set_color normal)
   set -l now    (set_color red)(date +"%R")(set_color normal)
   echo {$now}{$user_prompt}(prompt_pwd){$branch}{$status_prompt}
   echo $prompt
